@@ -810,6 +810,49 @@ else
 fi
 
 ###############################
+### Aniverse Mod ###
+###############################
+
+############ h5ai ############
+echo "Configuring h5ai" | tee -a $logfile
+apt-get install -y rar unrar imagemagick vim >> $logfile 2>&1
+cd /var/www
+wget https://release.larsjung.de/h5ai/h5ai-0.29.0.zip >> $logfile 2>&1
+unzip h5ai-0.29.0.zip >> $logfile 2>&1
+rm -rf h5ai-0.29.0.zip
+chmod 775 -R _h5ai/private/cache >> $logfile 2>&1
+chmod 775 -R _h5ai/public/cache >> $logfile 2>&1
+rm -rf index.html
+service nginx restart >> $logfile 2>&1
+mkdir -p /home/${user}/rtorrent/download
+mkdir -p /home/${user}/deluge/download
+mkdir -p /home/${user}/qbittorrent/download
+ln -s /home/${user}/rtorrent/download/ /var/www/rtorrent
+ln -s /home/${user}/deluge/download/ /var/www/deluge
+ln -s /home/${user}/qbittorrent/download/ /var/www/qbittorrent
+cd
+###############################
+
+#### themes and filemanager ####
+echo "Installing RuTorrent themes and filemanager plugin" | tee -a $logfile
+cd /var/www/rutorrent/plugins
+git clone https://github.com/xombiemp/rutorrentMobile.git mobile >> $logfile 2>&1
+cd /var/www/rutorrent/plugins/theme/themes
+svn co https://github.com/ArtyumX/ruTorrent-Themes/trunk/MaterialDesign >> $logfile 2>&1
+svn co https://github.com/ArtyumX/ruTorrent-Themes/trunk/club-QuickBox >> $logfile 2>&1
+cd
+export serverip=$(ip route get 8.8.8.8 | awk 'NR==1 {print $NF}')
+openssl req -x509 -nodes -days 3650 -subj /CN=$serverip -config /etc/ssl/ruweb.cnf -newkey rsa:2048 -keyout /etc/ssl/private/ruweb.key -out /etc/ssl/ruweb.crt >> $logfile 2>&1
+wget https://github.com/Aniverse/RutFm/raw/master/filemanager.sh >> $logfile 2>&1
+chmod +x filemanager.sh
+bash filemanager.sh >> $logfile 2>&1
+rm -rf filemanager.sh
+###############################
+
+
+
+
+###############################
 ### FINAL TASKS ###
 ###############################
 
