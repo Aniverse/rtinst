@@ -813,6 +813,11 @@ fi
 ### Aniverse Mod ###
 ###############################
 
+mkdir -p /etc/inexistence/log
+touch /etc/inexistence/log/rutorrent_errors.log
+touch /etc/inexistence/log/rtorrent.log
+chmod -R 777 /etc/inexistence/log
+
 ############ h5ai ############
 echo "Configuring h5ai" | tee -a $logfile
 apt-get install -y rar unrar imagemagick vim >> $logfile 2>&1
@@ -825,11 +830,7 @@ chmod 775 -R _h5ai/public/cache >> $logfile 2>&1
 rm -rf index.html
 service nginx restart >> $logfile 2>&1
 mkdir -p /home/${user}/rtorrent/download
-mkdir -p /home/${user}/deluge/download
-mkdir -p /home/${user}/qbittorrent/download
 ln -s /home/${user}/rtorrent/download/ /var/www/rtorrent
-ln -s /home/${user}/deluge/download/ /var/www/deluge
-ln -s /home/${user}/qbittorrent/download/ /var/www/qbittorrent
 cd
 ###############################
 
