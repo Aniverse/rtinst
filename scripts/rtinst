@@ -472,9 +472,11 @@ if [ $osname = "Debian" ] && ! installed unrar; then
   do
     attempts=$(( $attempts + 1 ))
     if [ "$(uname -m)" = "x86_64" ]; then
-      curl -s --connect-timeout 10 http://www.rarlab.com/rar/rarlinux-x64-5.4.0.tar.gz | tar xz 2>/dev/null
+      wget --no-check-certificate --timeout=10 -q https://raw.githubusercontent.com/Aniverse/rtinst/h5ai-ipv6/rarlinux-x64-5.5.0.tar.gz
+      tar zxf rarlinux-x64-5.5.0.tar.gz 2>/dev/null
     elif [ "$(uname -m)" = "x86_32" ]; then
-      curl -s --connect-timeout 10 http://www.rarlab.com/rar/rarlinux-5.4.0.tar.gz | tar xz 2>/dev/null
+      wget --no-check-certificate --timeout=10 -q https://raw.githubusercontent.com/Aniverse/rtinst/h5ai-ipv6/rarlinux-5.5.0.tar.gz
+      tar zxf rarlinux-5.5.0.tar.gz 2>/dev/null
     fi
   done
   if [ -d rar ]; then
@@ -820,7 +822,7 @@ chmod -R 777 /etc/inexistence/log
 
 ############ h5ai ############
 echo "Configuring h5ai" | tee -a $logfile
-apt-get install -y rar unrar imagemagick vim >> $logfile 2>&1
+apt-get install -y imagemagick vim >> $logfile 2>&1
 cd /var/www
 wget https://release.larsjung.de/h5ai/h5ai-0.29.0.zip >> $logfile 2>&1
 unzip h5ai-0.29.0.zip >> $logfile 2>&1
@@ -830,7 +832,7 @@ chmod 775 -R _h5ai/public/cache >> $logfile 2>&1
 rm -rf index.html
 service nginx restart >> $logfile 2>&1
 mkdir -p /home/${user}/rtorrent/download
-ln -s /home/${user}/rtorrent/download/ /var/www/rtorrent
+ln -s /home/${user}/rtorrent/download/ /var/www/rtorrent.download
 cd
 ###############################
 
@@ -842,8 +844,6 @@ cd /var/www/rutorrent/plugins/theme/themes
 svn co https://github.com/ArtyumX/ruTorrent-Themes/trunk/MaterialDesign >> $logfile 2>&1
 svn co https://github.com/ArtyumX/ruTorrent-Themes/trunk/club-QuickBox >> $logfile 2>&1
 cd
-export serverip=$(ip route get 8.8.8.8 | awk 'NR==1 {print $NF}')
-openssl req -x509 -nodes -days 3650 -subj /CN=$serverip -config /etc/ssl/ruweb.cnf -newkey rsa:2048 -keyout /etc/ssl/private/ruweb.key -out /etc/ssl/ruweb.crt >> $logfile 2>&1
 wget https://github.com/Aniverse/RutFm/raw/master/filemanager.sh >> $logfile 2>&1
 chmod +x filemanager.sh
 bash filemanager.sh >> $logfile 2>&1
