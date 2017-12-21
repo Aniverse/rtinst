@@ -748,7 +748,7 @@ echo "\$homeDirectory = \"$home\";" >> /var/www/rutorrent/conf/users/$user/confi
 echo "\$topDirectory = \"$home\";" >> /var/www/rutorrent/conf/users/$user/config.php
 echo "\$scgi_port = 5000;" >> /var/www/rutorrent/conf/users/$user/config.php
 echo "\$XMLRPCMountPoint = \"/RPC2\";" >> /var/www/rutorrent/conf/users/$user/config.php
-echo "\$SCGIServerTimeout = 60;" >> /var/www/rutorrent/conf/users/black/config.php
+echo "\$SCGIServerTimeout = 60;" >> /var/www/rutorrent/conf/users/$user/config.php
 echo >> /var/www/rutorrent/conf/users/$user/config.php
 echo "?>" >> /var/www/rutorrent/conf/users/$user/config.php
 
