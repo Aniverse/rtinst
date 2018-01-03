@@ -824,8 +824,8 @@ chmod -R 777 /etc/inexistence/log
 echo "Configuring h5ai" | tee -a $logfile
 apt-get install -y imagemagick vim >> $logfile 2>&1
 cd /var/www
-wget https://release.larsjung.de/h5ai/h5ai-0.29.0.zip >> $logfile 2>&1
-unzip h5ai-0.29.0.zip >> $logfile 2>&1
+wget --no-check-certificate -t1 --timeout=7 https://release.larsjung.de/h5ai/h5ai-0.29.0.zip >> $logfile 2>&1
+unzip -o h5ai-0.29.0.zip >> $logfile 2>&1
 rm -rf h5ai-0.29.0.zip
 chmod 775 -R _h5ai/private/cache >> $logfile 2>&1
 chmod 775 -R _h5ai/public/cache >> $logfile 2>&1
@@ -844,8 +844,7 @@ cd /var/www/rutorrent/plugins/theme/themes
 svn co https://github.com/ArtyumX/ruTorrent-Themes/trunk/MaterialDesign >> $logfile 2>&1
 svn co https://github.com/ArtyumX/ruTorrent-Themes/trunk/club-QuickBox >> $logfile 2>&1
 cd
-wget https://github.com/Aniverse/RutFm/raw/master/filemanager.sh >> $logfile 2>&1
-chmod +x filemanager.sh
+wget --no-check-certificate -t1 --timeout=7 https://github.com/Aniverse/RutFm/raw/master/filemanager.sh >> $logfile 2>&1
 bash filemanager.sh >> $logfile 2>&1
 rm -rf filemanager.sh
 ###############################
