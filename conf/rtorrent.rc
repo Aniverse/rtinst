@@ -70,8 +70,8 @@ pieces.preload.min_rate.set = 5120
 #   Levels = critical error warn notice info debug
 #   Groups = connection_* dht_* peer_* rpc_* storage_* thread_* tracker_* torrent_*
 #print = (cat,"Logging to ",(cfg.logfile))
-log.open_file = "rtorrent.log", "/etc/inexistence/log/rtorrent.log"
-log.add_output = "info", "rtorrent.log"
+#log.open_file = "rtorrent.log", "/etc/inexistence/01.Log/rtorrent.log"
+#log.add_output = "info", "rtorrent.log"
 
 
 ### The following line initialises rutorrent plugins without needing to open the web interface
