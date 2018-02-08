@@ -815,6 +815,9 @@ fi
 ### Aniverse Mod ###
 ###############################
 
+# For Ubuntu 16.04， haven't test on other os.
+apt-get install -y php-xml >> $logfile 2>&1
+
 mkdir -p /etc/inexistence/log
 touch /etc/inexistence/log/rutorrent_errors.log
 touch /etc/inexistence/log/rtorrent.log
