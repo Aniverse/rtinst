@@ -480,8 +480,8 @@ if [ $osname = "Debian" ] && ! installed unrar; then
     fi
   done
   if [ -d rar ]; then
-    cp $home/rar/rar /bin/rar
-    cp $home/rar/unrar /bin/unrar
+    cp -f $home/rar/rar /usr/bin/rar
+    cp -f $home/rar/unrar /usr/bin/unrar
     rm -r $home/rar
   fi
 elif [ $osname = "Ubuntu" ]; then

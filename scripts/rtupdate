@@ -178,12 +178,12 @@ rm -rf xmlrpc libtorrent* rtorrent*
 echo "Fetching source files"
 
 
-if [ $rtdevrel = 0 ]; then
+if [[ $rtdevrel = 0 ]] || [[ $rtvers == 0.9.6 ]]; then
   git clone -q -b feature-bind --single-branch https://github.com/rakshasa/libtorrent.git libtorrent-$libvers
   git clone -q -b feature-bind --single-branch https://github.com/rakshasa/rtorrent.git rtorrent-$rtvers
 else
-  curl -# http://rtorrent.net/downloads/libtorrent-$libvers.tar.gz | tar xz
-  curl -# http://rtorrent.net/downloads/rtorrent-$rtvers.tar.gz | tar xz
+  wget --no-check-certificate -q https://github.com/Aniverse/swis/raw/master/rTorrent/libtorrent-$libvers.tar.gz && tar xzf libtorrent-$libvers.tar.gz
+  wget --no-check-certificate -q https://github.com/Aniverse/swis/raw/master/rTorrent/rtorrent-$rtvers.tar.gz && tar xzf rtorrent-$rtvers.tar.gz
 fi
 
 if [ $xmlrpc_repo = 0 ]; then
@@ -201,9 +201,9 @@ cd libtorrent-$libvers
 echo "Installing libtorrent" | tee -a $logfile
 ./autogen.sh >> $logfile 2>&1
 if [ $osname = "Raspbian" ]; then
-  ./configure --prefix=/usr --disable-instrumentation >> $logfile 2>&1
+  ./configure --prefix=/usr --enable-ipv6 --disable-instrumentation >> $logfile 2>&1
 else
-  ./configure --prefix=/usr >> $logfile 2>&1
+  ./configure --prefix=/usr --enable-ipv6 >> $logfile 2>&1
 fi
 make -s -j$(nproc) >> $logfile 2>&1
 make -s install >> $logfile 2>&1
@@ -211,8 +211,8 @@ make -s install >> $logfile 2>&1
 cd ../rtorrent-$rtvers
 echo "Installing rtorrent" | tee -a $logfile
 ./autogen.sh >> $logfile 2>&1
-./configure --prefix=/usr --with-xmlrpc-c >> $logfile 2>&1
-make -s >> $logfile 2>&1
+./configure --prefix=/usr --with-xmlrpc-c --enable-ipv6 >> $logfile 2>&1
+make -s -j$(nproc) >> $logfile 2>&1
 make -s install >> $logfile 2>&1
 ldconfig >> $logfile 2>&1
 
