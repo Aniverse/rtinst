@@ -189,7 +189,7 @@ fi
 if [ $xmlrpc_repo = 0 ]; then
   XMLRPCVER=1.39.12
   wget --no-check-certificate https://github.com/Aniverse/xmlrpc-c/raw/master/tgz/xmlrpc-c-$XMLRPCVER.tgz >> $logfile 2>&1
-  tar -xzvf xmlrpc-c-$XMLRPCVER.tgz
+  tar -xzvf xmlrpc-c-$XMLRPCVER.tgz >> $logfile 2>&1
   cd xmlrpc-c-$XMLRPCVER
   echo "Installing xmlrpc" | tee -a $logfile
   ./configure --prefix=/usr --disable-cplusplus >> $logfile 2>&1
