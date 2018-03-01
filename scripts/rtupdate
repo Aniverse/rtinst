@@ -13,7 +13,7 @@ PATH=/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/bin:/sbin
 osname=$(lsb_release -si)
 relno=$(lsb_release -sr | cut -d. -f1)
 sourcedir='http://rtorrent.net/downloads/'
-xmlrpcloc='https://svn.code.sf.net/p/xmlrpc-c/code/stable/'
+xmlrpc_url="https://github.com/Aniverse/xmlrpc-c"
 rtdevrel=1
 
 if [ $relno = 9 ] || [ $(lsb_release -sr) = 17.10 ]; then
@@ -187,14 +187,16 @@ else
 fi
 
 if [ $xmlrpc_repo = 0 ]; then
-  svn co $xmlrpcloc xmlrpc  >> $logfile 2>&1
-
-  cd xmlrpc
+  XMLRPCVER=1.39.12
+  wget --no-check-certificate https://github.com/Aniverse/xmlrpc-c/raw/master/tgz/xmlrpc-c-$XMLRPCVER.tgz >> $logfile 2>&1
+  tar -xzvf xmlrpc-c-$XMLRPCVER.tgz
+  cd xmlrpc-c-$XMLRPCVER
   echo "Installing xmlrpc" | tee -a $logfile
   ./configure --prefix=/usr --disable-cplusplus >> $logfile 2>&1
   make -s -j$(nproc) >> $logfile 2>&1
   make -s install >> $logfile 2>&1
   cd ..
+  rm -rf xmlrpc-c*
 fi
 
 cd libtorrent-$libvers
