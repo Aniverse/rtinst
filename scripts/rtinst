@@ -539,7 +539,7 @@ else
   sshport=$oldsshport
 fi
 
-sed -i "/^\(\s\|#\)*Port / c\Port $sshport" /etc/ssh/sshd_config
+#sed -i "/^\(\s\|#\)*Port / c\Port $sshport" /etc/ssh/sshd_config
 sed -i "/^\(\s\|#\)*X11Forwarding /c\X11Forwarding no" /etc/ssh/sshd_config
 sed -i '/^\s*PasswordAuthentication no/ c\#PasswordAuthentication no' /etc/ssh/sshd_config
 
@@ -576,7 +576,7 @@ rtsslcert -d
 ### INSTALL FTP ###
 ###############################
 
-ftpport=$(random 41005 48995)
+ftpport=21
 
 if [ $(dpkg-query -W -f='${Status}' "vsftpd" 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
   echo "Installing vsftpd" | tee -a $logfile
